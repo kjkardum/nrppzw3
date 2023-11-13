@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Asteroids</title>
+    <style>
+        @font-face {
+            font-family: "Hyperspace";
+            font-style: normal;
+            font-weight: normal;
+            src: url("game/assets/fonts/Hyperspace-JvEM.ttf");
+        }
+        @font-face {
+            font-family: "Hyperspace";
+            font-style: normal;
+            font-weight: bold;
+            src: url("game/assets/fonts/HyperspaceBold-GM0g.ttf");
+        }
+        @font-face {
+            font-family: "Hyperspace";
+            font-style: italic;
+            font-weight: bold;
+            src: url("game/assets/fonts/HyperspaceBoldItalic-jqm0.ttf");
+        }
+        @font-face {
+            font-family: "Hyperspace";
+            font-style: italic;
+            font-weight: normal;
+            src: url("game/assets/fonts/HyperspaceItalic-z1j4.ttf");
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        #canvas {
+            max-width: 100%;
+            max-height: 100%;
+            width: 100%;
+            height: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: absolute;
+            background-color: black;
+        }
+    </style>
+</head>
+<body>
+    <img src="game/assets/sprite.png" id="img_sprite" style="display: none">
+    <img src="game/assets/ship_pieces_sprite.png" id="img_sprite_ship" style="display: none">
+    <div style="font-family: Hyperspace;" style="display: none">.</div>
+    <canvas id="canvas"></canvas>
+    <script src="setup.js" type="module"></script>
+</body>
+</html>
