@@ -83,6 +83,7 @@ export class Ball {
             }
             this.destroy();
             this.ship.game.player.destroy();
+            this.ship.destroy();
         }
     }
     destroy() {
