@@ -75,6 +75,7 @@ export class Saucer {
         ]
     }
     destroy() {
+        this.game.addPoints(this.version === "smart" ? this.game.config.points.smallSaucer : this.game.config.points.largeSaucer);
         this.alive = false;
         this.game.saucer = null;
         for (const ball of this.balls) {
