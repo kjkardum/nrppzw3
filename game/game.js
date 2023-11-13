@@ -138,7 +138,6 @@ export class Game {
         // draw high scores
         this.context.font = "32px Hyperspace";
         gameSaved.highScores.forEach((score, index) => {
-            // 1 (pad up to 6 spaces) A
             this.context.fillText(
                 (index + 1).toString().padStart(2, ' ')
                     + ' ' + score.value.toString().padStart(6, ' ')
@@ -146,7 +145,6 @@ export class Game {
                 this.width / 2 - 192, 72 + 64 + 72 + 84 + 32 * (index + 2));
         });
 
-        // 1 coin 1 play
         this.context.font = "48px Hyperspace";
         this.context.textAlign = "center";
         this.context.fillText("1 COIN 1 PLAY", this.width / 2,  72 + 64 + 72 + 84 + 32 * (14));
@@ -184,7 +182,6 @@ export class Game {
         this.context.textAlign = "center";
         this.context.fillText(highScore.toString().padStart(2, '0'), this.width / 2, 72 + 64);
 
-        // push start (R)
         this.context.font = "48px Hyperspace";
         this.context.textAlign = "left";
         this.context.fillText("YOUR SCORE IS ONE OF THE TEN BEST", 10, 72 + 64 + 72);
@@ -241,12 +238,10 @@ export class Game {
         this.context.shadowOffsetY = 3;
         const pointsText = this.points.toString().padStart(2, '0');
         this.context.fillText(pointsText, 128, 72);
-        //this.context.fillText("Saucer: " + (this.saucer ? `${this.saucer.balls.length}` : "no"), this.width - 128 - 64, 72);
         this.context.shadowBlur = 0;
         this.context.shadowOffsetX = 0;
         this.context.shadowOffsetY = 0;
         for (let i = 0; i < this.lives; i++) {
-            // rotated 90 degrees counterclockwise
             this.context.save();
             this.context.translate(80 + i * 30, 148);
             this.context.rotate(-Math.PI / 2);
