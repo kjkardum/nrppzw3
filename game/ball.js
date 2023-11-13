@@ -27,24 +27,62 @@ export class Ball {
     };
     check_collision() {
         const treshold = 50;
-        for (const asteroid of this.ship.game.asteroids) {
-            const asteroid_hitbox = asteroid.getHitbox();
+        if (this.ship === this.ship.game.player) {
+            for (const asteroid of this.ship.game.asteroids) {
+                const asteroid_hitbox = asteroid.getHitbox();
+                const hitbox = this.getHitbox();
+                if (hitbox[0] > asteroid_hitbox[2]) {
+                    continue;
+                }
+                if (hitbox[2] < asteroid_hitbox[0]) {
+                    continue;
+                }
+                if (hitbox[1] > asteroid_hitbox[3]) {
+                    continue;
+                }
+                if (hitbox[3] < asteroid_hitbox[1]) {
+                    continue;
+                }
+                this.destroy();
+                asteroid.destroy();
+                return;
+            }
+            if (this.ship.game.saucer) {
+                const saucer_hitbox = this.ship.game.saucer.getHitbox();
+                const hitbox = this.getHitbox();
+                if (hitbox[0] > saucer_hitbox[2]) {
+                    return;
+                }
+                if (hitbox[2] < saucer_hitbox[0]) {
+                    return;
+                }
+                if (hitbox[1] > saucer_hitbox[3]) {
+                    return;
+                }
+                if (hitbox[3] < saucer_hitbox[1]) {
+                    return;
+                }
+                this.destroy();
+                this.ship.game.saucer.destroy();
+                return;
+            }
+        } else {
             const hitbox = this.getHitbox();
-            if (hitbox[0] > asteroid_hitbox[2]) {
-                continue;
+            const ship_hitbox = this.ship.game.player.getHitbox();
+            if (hitbox[0] > ship_hitbox[2]) {
+                return;
             }
-            if (hitbox[2] < asteroid_hitbox[0]) {
-                continue;
+            if (hitbox[2] < ship_hitbox[0]) {
+                return;
             }
-            if (hitbox[1] > asteroid_hitbox[3]) {
-                continue;
+            if (hitbox[1] > ship_hitbox[3]) {
+                return;
             }
-            if (hitbox[3] < asteroid_hitbox[1]) {
-                continue;
+            if (hitbox[3] < ship_hitbox[1]) {
+                return;
             }
             this.destroy();
-            asteroid.destroy();
-            return;
+            this.ship.game.player.destroy();
         }
     }
     destroy() {

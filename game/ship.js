@@ -113,6 +113,25 @@ export class Ship {
             asteroid.destroy();
             return;
         }
+        if (this.game.saucer) {
+            const saucer_hitbox = this.game.saucer.getHitbox();
+            const hitbox = this.getHitbox();
+            if (hitbox[0] > saucer_hitbox[2]) {
+                return;
+            }
+            if (hitbox[2] < saucer_hitbox[0]) {
+                return;
+            }
+            if (hitbox[1] > saucer_hitbox[3]) {
+                return;
+            }
+            if (hitbox[3] < saucer_hitbox[1]) {
+                return;
+            }
+            this.destroy();
+            this.game.saucer.destroy();
+            return;
+        }
     }
     destroy() {
         this.dead = true;

@@ -2,7 +2,7 @@ export const default_config = {
     numberOfAsteroids: Math.round(Math.random() * 2) + 4,
     numberOfAsteroidsMultiplier: 1.2,
     maxNumberOfAsteroids: 8,
-    lives: 1,
+    lives: 4,
     points: {
         small: 100,
         medium: 50,
@@ -12,4 +12,5 @@ export const default_config = {
         smallSaucerPermanentTreshold: 10000,
         forExtraLife: 10000,
     },
+    saucerAppearsEach: 60 * 10 + Math.round(Math.random() * 60 * 10),
 }

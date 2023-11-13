@@ -2,6 +2,7 @@ import { Asteroid } from './asteroid.js';
 import {Ship} from "./ship.js";
 import {default_config} from "./util/config.js";
 import {ship} from "./util/sprites.js";
+import {Saucer} from "./saucer.js";
 
 export class Game {
     constructor(canvas, config = default_config) {
@@ -25,6 +26,7 @@ export class Game {
         this.selectedLetterPosition = 0;
         this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ';
         this.currentName = '   ';
+        this.lastSaucerTick = 0;
 
         window.addEventListener('keydown', this.gameListenerKeyDown = (event) => {
             let key = event.key;
@@ -69,6 +71,13 @@ export class Game {
                 asteroid.update();
             }
             this.player.update();
+            this.saucer?.update();
+
+            if (this.tick - this.lastSaucerTick > this.config.saucerAppearsEach && !this.saucer) {
+                this.lastSaucerTick = this.tick;
+                const smartOrDumb = Math.random() > 0.5 ? "smart" : "dumb";
+                this.saucer = new Saucer(this, smartOrDumb);
+            }
         }
         if (this.state === "highscore" && this.tick % 10 === 0) {
             if (this.pressedKeys.includes('ArrowLeft')) {
@@ -222,6 +231,7 @@ export class Game {
             asteroid.draw();
         }
         this.player.draw();
+        this.saucer?.draw();
 
         this.context.font = "64px Hyperspace";
         this.context.fillStyle = "white";
@@ -231,6 +241,7 @@ export class Game {
         this.context.shadowOffsetY = 3;
         const pointsText = this.points.toString().padStart(2, '0');
         this.context.fillText(pointsText, 128, 72);
+        //this.context.fillText("Saucer: " + (this.saucer ? `${this.saucer.balls.length}` : "no"), this.width - 128 - 64, 72);
         this.context.shadowBlur = 0;
         this.context.shadowOffsetX = 0;
         this.context.shadowOffsetY = 0;
@@ -242,11 +253,24 @@ export class Game {
             this.context.drawImage(...ship, 0, 0, 64, 48);
             this.context.restore();
         }
+        if (this.tick < 60 * 5) {
+            this.context.shadowColor = "#86A1B5";
+            this.context.shadowBlur = 5;
+            this.context.shadowOffsetX = 3;
+            this.context.shadowOffsetY = 3;
+            this.context.font = "16px Hyperspace";
+            this.context.textAlign = "center";
+            this.context.fillText("USE ARROW KEYS TO MOVE AND SPACE TO SHOOT", this.width / 2,  this.height - 64);
+            this.context.shadowBlur = 0;
+            this.context.shadowOffsetX = 0;
+            this.context.shadowOffsetY = 0;
+        }
     }
     init() {
         for (let i = 0; i < this.numberOfAsteroids; i++) {
             this.asteroids.push(new Asteroid(this));
         }
+        this.tick = 0;
         this.lives -= 1;
         this.state = "running";
         this.player = new Ship(this);
@@ -259,6 +283,7 @@ export class Game {
         this.state = "gameover"
         this.asteroids = [];
         this.player = null;
+        this.lives = this.config.lives;
         setTimeout(() => {
             this.state = isHighScore ? "highscore" : "start";
         }, 2000);
