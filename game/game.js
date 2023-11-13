@@ -283,6 +283,8 @@ export class Game {
         this.state = "gameover"
         this.asteroids = [];
         this.player = null;
+        this.saucer.destroy();
+        this.lastSaucerTick = 0;
         this.lives = this.config.lives;
         setTimeout(() => {
             this.state = isHighScore ? "highscore" : "start";
