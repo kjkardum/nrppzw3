@@ -3,6 +3,11 @@ import { Game } from './game/game.js';
 /**
  * after the page loads, create the game and start it.
  * Then loop each frame using requestAnimationFrame to update the game as often as browser allows
+ *
+ * Each object on screen is its own class, it has constructor, draw and update method
+ * If it's collideable, it has getHitbox method, and sometimes check_collision and destroy methods
+ *
+ * The code is modular so to be as much self explanatory as possible
  */
 window.addEventListener('load', () => {
     if (localStorage.getItem("gameSaved") === null) {
@@ -37,11 +42,3 @@ window.addEventListener('load', () => {
        }
     });
 })
-
-/*
-PLANS:
-Ball can colide with asteroid, with saucer, with ship.
-Ship can colide with saucer, with asteroid
-
-Asteroid, saucer, ship need to have hit action
- */
